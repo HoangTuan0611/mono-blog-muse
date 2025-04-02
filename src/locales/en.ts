@@ -19,10 +19,14 @@ export const en = {
   "blog.read_more": "Read more",
   "blog.no_posts": "No posts found",
   "blog.adjust_search": "Try adjusting your search or filter criteria",
+  "blog.view_credential": "View Credential",
   
   // Certifications
   "certifications.title": "Certifications",
   "certifications.subtitle": "Professional achievements and qualifications",
+  "certifications.issued": "Issued",
+  "certifications.expires": "Expires",
+  "certifications.view_credential": "View Credential",
   
   // Videos
   "videos.title": "Video Gallery",

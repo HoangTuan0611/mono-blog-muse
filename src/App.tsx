@@ -18,8 +18,8 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <LanguageProvider>
+  <LanguageProvider>
+    <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Sonner />
@@ -37,8 +37,8 @@ const App = () => (
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
-    </LanguageProvider>
-  </QueryClientProvider>
+    </QueryClientProvider>
+  </LanguageProvider>
 );
 
 export default App;
