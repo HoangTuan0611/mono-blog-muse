@@ -3,8 +3,9 @@ import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { en } from '@/locales/en';
 import { fr } from '@/locales/fr';
 import { es } from '@/locales/es';
+import { vi } from '@/locales/vi';
 
-type Language = 'en' | 'fr' | 'es';
+type Language = 'en' | 'fr' | 'es' | 'vi';
 type Translations = Record<string, string>;
 
 interface LanguageContextType {
@@ -17,7 +18,8 @@ interface LanguageContextType {
 const translations = {
   en,
   fr,
-  es
+  es,
+  vi
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);

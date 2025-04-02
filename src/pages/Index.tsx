@@ -6,10 +6,18 @@ import { getFeaturedPosts, getRecentPosts, Post } from "@/data/posts";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { certifications } from "@/data/certifications";
+import { videos } from "@/data/videos";
+import { travelPosts } from "@/data/travel";
 
 const Index = () => {
+  const { t } = useLanguage();
   const featuredPosts = getFeaturedPosts();
   const recentPosts = getRecentPosts(4);
+  const recentCertifications = certifications.slice(0, 3);
+  const featuredVideos = videos.slice(0, 3);
+  const recentTravelPosts = travelPosts.slice(0, 3);
   const [animatedElements, setAnimatedElements] = useState<NodeListOf<Element> | null>(null);
 
   useEffect(() => {
@@ -65,6 +73,14 @@ const Index = () => {
               <FeaturedPostCard key={post.id} post={post} />
             ))}
           </div>
+          
+          <div className="flex justify-center mt-12">
+            <Button asChild variant="outline" className="rounded-none">
+              <Link to="/blog" className="flex items-center gap-2">
+                View All Posts <ArrowRight size={16} />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -81,6 +97,118 @@ const Index = () => {
           {recentPosts.map((post) => (
             <RecentPostCard key={post.id} post={post} />
           ))}
+        </div>
+      </section>
+
+      {/* Certifications Section */}
+      <section className="bg-black text-white py-16 md:py-24">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="flex justify-between items-end mb-12">
+            <h2 className="text-3xl font-medium animate-on-scroll">{t("certifications.title")}</h2>
+            <Link to="/certifications" className="flex items-center gap-2 text-white hover-underline">
+              View all <ArrowRight size={16} />
+            </Link>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {recentCertifications.map((cert) => (
+              <div 
+                key={cert.id} 
+                className="border border-gray-800 p-6 hover:bg-white/5 transition-colors animate-on-scroll"
+              >
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="text-xl font-medium">{cert.name}</h3>
+                  <span className="px-3 py-1 bg-white/10 text-sm">{cert.category}</span>
+                </div>
+                <p className="text-gray-400 mb-4 font-serif">{cert.issuer}</p>
+                <Link 
+                  to="/certifications" 
+                  className="inline-block mt-4 text-sm hover-underline"
+                >
+                  {t("certifications.view_credential")}
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Videos Section */}
+      <section className="py-16 md:py-24 container mx-auto px-4 sm:px-6">
+        <div className="flex justify-between items-end mb-12">
+          <h2 className="text-3xl font-medium animate-on-scroll">{t("videos.title")}</h2>
+          <Link to="/videos" className="flex items-center gap-2 hover-underline">
+            View all <ArrowRight size={16} />
+          </Link>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-8">
+          {featuredVideos.map((video) => (
+            <div key={video.id} className="group animate-on-scroll">
+              <div className="aspect-video relative overflow-hidden">
+                <img
+                  src={video.thumbnail}
+                  alt={video.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="w-16 h-16 rounded-full bg-black/70 flex items-center justify-center">
+                    <svg 
+                      className="w-8 h-8 text-white" 
+                      fill="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <h3 className="mt-3 text-lg font-medium">{video.title}</h3>
+              <p className="text-gray-500 text-sm mt-1">{video.duration}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Travel Section */}
+      <section className="bg-gray-100 py-16 md:py-24">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="flex justify-between items-end mb-12">
+            <h2 className="text-3xl font-medium animate-on-scroll">{t("travel.title")}</h2>
+            <Link to="/travel" className="flex items-center gap-2 hover-underline">
+              View all <ArrowRight size={16} />
+            </Link>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {recentTravelPosts.map((post) => (
+              <Link 
+                key={post.id}
+                to={`/travel/${post.slug}`} 
+                className="group block animate-on-scroll"
+              >
+                <div className="overflow-hidden aspect-[4/3]">
+                  <img
+                    src={post.coverImage}
+                    alt={post.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="mt-4">
+                  <div className="flex gap-3 items-center mb-2">
+                    <span className="px-3 py-1 bg-gray-200 text-sm">{post.region}</span>
+                    <time dateTime={post.date} className="text-sm text-gray-500">
+                      {formatDate(post.date)}
+                    </time>
+                  </div>
+                  <h3 className="text-xl font-medium group-hover:underline decoration-1 underline-offset-2">
+                    {post.title}
+                  </h3>
+                  <p className="text-gray-600 mt-2 font-serif line-clamp-2">{post.excerpt}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

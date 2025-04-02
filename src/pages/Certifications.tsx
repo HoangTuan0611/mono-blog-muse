@@ -56,9 +56,9 @@ const Certifications = () => {
                 </div>
                 <p className="text-gray-600 mb-4 font-serif">{cert.issuer}</p>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-500">Issued: {cert.issueDate}</span>
+                  <span className="text-gray-500">{t("certifications.issued")}: {cert.issueDate}</span>
                   {cert.expiryDate && (
-                    <span className="text-gray-500">Expires: {cert.expiryDate}</span>
+                    <span className="text-gray-500">{t("certifications.expires")}: {cert.expiryDate}</span>
                   )}
                 </div>
                 {cert.credentialUrl && (
@@ -69,7 +69,7 @@ const Certifications = () => {
                       rel="noopener noreferrer"
                       className="hover-underline text-sm font-medium"
                     >
-                      View Credential
+                      {t("certifications.view_credential")}
                     </a>
                   </div>
                 )}

@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Globe } from "lucide-react";
+import { Menu, X, Globe, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
@@ -14,6 +14,7 @@ import {
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
@@ -27,6 +28,7 @@ const Header = () => {
 
   const toggleMenu = () => setMobileMenuOpen(!mobileMenuOpen);
   const closeMenu = () => setMobileMenuOpen(false);
+  const toggleSearch = () => setSearchOpen(!searchOpen);
 
   const navLinks = [
     { name: t("nav.home"), path: "/" },
@@ -65,6 +67,14 @@ const Header = () => {
             </Link>
           ))}
 
+          <button 
+            onClick={toggleSearch} 
+            className="hover:text-gray-600 transition-colors"
+            aria-label="Search"
+          >
+            <Search size={18} />
+          </button>
+
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center gap-1">
               <Globe size={16} />
@@ -74,18 +84,28 @@ const Header = () => {
               <DropdownMenuItem onClick={() => setLanguage('en')}>English</DropdownMenuItem>
               <DropdownMenuItem onClick={() => setLanguage('fr')}>Français</DropdownMenuItem>
               <DropdownMenuItem onClick={() => setLanguage('es')}>Español</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLanguage('vi')}>Tiếng Việt</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </nav>
 
         {/* Mobile Menu Toggle */}
-        <button
-          className="md:hidden p-2"
-          onClick={toggleMenu}
-          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-        >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="md:hidden flex items-center gap-4">
+          <button 
+            onClick={toggleSearch} 
+            className="hover:text-gray-600 transition-colors"
+            aria-label="Search"
+          >
+            <Search size={18} />
+          </button>
+          <button
+            className="p-2"
+            onClick={toggleMenu}
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
@@ -120,10 +140,35 @@ const Header = () => {
               >
                 Español
               </button>
+              <button 
+                className="py-3 px-6 hover:bg-gray-100 transition-colors w-full text-left" 
+                onClick={() => {setLanguage('vi'); closeMenu();}}
+              >
+                Tiếng Việt
+              </button>
             </div>
           </div>
         )}
       </div>
+
+      {/* Search Overlay */}
+      {searchOpen && (
+        <div className="absolute top-full left-0 right-0 bg-white shadow-md p-4 animate-fade-in">
+          <form className="max-w-2xl mx-auto flex">
+            <input
+              type="text"
+              placeholder={t("blog.search")}
+              className="flex-1 px-4 py-2 border border-gray-200 focus:outline-none focus:border-black transition-colors"
+            />
+            <button 
+              type="submit" 
+              className="bg-black text-white px-4 py-2 hover:bg-gray-800 transition-colors"
+            >
+              <Search size={18} />
+            </button>
+          </form>
+        </div>
+      )}
     </header>
   );
 };
