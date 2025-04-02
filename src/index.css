@@ -71,7 +71,7 @@
   }
 
   .post-content {
-    @apply prose prose-lg prose-black mx-auto max-w-3xl;
+    @apply prose prose-lg mx-auto max-w-3xl;
   }
 
   .post-content h1, .post-content h2, .post-content h3, .post-content h4 {

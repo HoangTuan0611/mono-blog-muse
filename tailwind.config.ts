@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -114,7 +113,32 @@ export default {
 				'fade-in': 'fade-in 0.5s ease-out',
 				'fade-out': 'fade-out 0.5s ease-out',
 				'slide-up': 'slide-up 0.5s ease-out'
-			}
+			},
+			typography: {
+				DEFAULT: {
+					css: {
+						color: '#222222',
+						a: {
+							color: '#000000',
+							'&:hover': {
+								color: '#333333',
+							},
+						},
+						h1: {
+							color: '#000000',
+						},
+						h2: {
+							color: '#000000',
+						},
+						h3: {
+							color: '#000000',
+						},
+						h4: {
+							color: '#000000',
+						},
+					},
+				},
+			},
 		}
 	},
 	plugins: [
