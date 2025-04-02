@@ -2,22 +2,22 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import MainLayout from "@/layouts/MainLayout";
-import { posts, Post } from "@/data/posts";
+import { travelPosts } from "@/data/travel";
 import { formatDate } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const CATEGORIES = ["All", ...Array.from(new Set(posts.map(post => post.category)))];
-
-const Blog = () => {
+const Travel = () => {
   const { t } = useLanguage();
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedRegion, setSelectedRegion] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredPosts = posts.filter(post => {
-    const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
+  const regions = ["All", ...new Set(travelPosts.map(post => post.region))];
+  
+  const filteredPosts = travelPosts.filter(post => {
+    const matchesRegion = selectedRegion === "All" || post.region === selectedRegion;
     const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+    return matchesRegion && matchesSearch;
   });
 
   return (
@@ -25,10 +25,10 @@ const Blog = () => {
       <section className="container mx-auto px-4 sm:px-6 pt-8 pb-16 md:pt-16 md:pb-24">
         <div className="max-w-4xl mx-auto text-center animate-slide-up">
           <h1 className="text-4xl md:text-5xl font-medium tracking-tight mb-6">
-            {t("blog.title")}
+            {t("travel.title")}
           </h1>
           <p className="text-xl text-gray-600 mb-12 font-serif">
-            {t("blog.subtitle")}
+            {t("travel.subtitle")}
           </p>
           
           {/* Search and Filter */}
@@ -41,29 +41,53 @@ const Blog = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <div className="flex overflow-x-auto whitespace-nowrap gap-2 md:gap-4 pb-2">
-              {CATEGORIES.map(category => (
+              {regions.map(region => (
                 <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
+                  key={region}
+                  onClick={() => setSelectedRegion(region)}
                   className={`px-4 py-2 whitespace-nowrap ${
-                    selectedCategory === category
+                    selectedRegion === region
                       ? "bg-black text-white"
                       : "bg-gray-100 text-gray-800 hover:bg-gray-200"
                   } transition-colors`}
                 >
-                  {category}
+                  {region}
                 </button>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Blog Posts */}
-        <div className="max-w-5xl mx-auto">
+        {/* Travel Posts Grid */}
+        <div className="max-w-6xl mx-auto">
           {filteredPosts.length > 0 ? (
-            <div className="grid gap-12">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredPosts.map((post) => (
-                <BlogPostCard key={post.id} post={post} />
+                <Link 
+                  key={post.id}
+                  to={`/travel/${post.slug}`} 
+                  className="group block animate-on-scroll"
+                >
+                  <div className="overflow-hidden aspect-[4/3]">
+                    <img
+                      src={post.coverImage}
+                      alt={post.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="mt-4">
+                    <div className="flex gap-3 items-center mb-2">
+                      <span className="px-3 py-1 bg-gray-100 text-sm">{post.region}</span>
+                      <time dateTime={post.date} className="text-sm text-gray-500">
+                        {formatDate(post.date)}
+                      </time>
+                    </div>
+                    <h2 className="text-xl font-medium group-hover:underline decoration-1 underline-offset-2">
+                      {post.title}
+                    </h2>
+                    <p className="text-gray-600 mt-2 font-serif line-clamp-2">{post.excerpt}</p>
+                  </div>
+                </Link>
               ))}
             </div>
           ) : (
@@ -78,34 +102,4 @@ const Blog = () => {
   );
 };
 
-const BlogPostCard = ({ post }: { post: Post }) => {
-  const { t } = useLanguage();
-  
-  return (
-    <Link to={`/blog/${post.slug}`} className="group grid md:grid-cols-5 gap-8 animate-on-scroll">
-      <div className="md:col-span-2 overflow-hidden aspect-[4/3]">
-        <img
-          src={post.coverImage}
-          alt={post.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-      </div>
-      <div className="md:col-span-3 space-y-3">
-        <div className="flex flex-wrap gap-4 items-center text-sm">
-          <span className="px-3 py-1 bg-gray-100">{post.category}</span>
-          <time dateTime={post.date} className="text-gray-500">{formatDate(post.date)}</time>
-          <span className="text-gray-500">{post.readingTime}</span>
-        </div>
-        <h2 className="text-2xl font-medium group-hover:underline decoration-1 underline-offset-2">
-          {post.title}
-        </h2>
-        <p className="text-gray-600 font-serif">{post.excerpt}</p>
-        <div className="pt-2">
-          <span className="hover-underline text-sm font-medium">{t("blog.read_more")}</span>
-        </div>
-      </div>
-    </Link>
-  );
-};
-
-export default Blog;
+export default Travel;

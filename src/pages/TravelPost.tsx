@@ -2,22 +2,22 @@
 import { useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import MainLayout from "@/layouts/MainLayout";
-import { getPostBySlug, getRelatedPosts } from "@/data/posts";
-import { ArrowLeft, Share2 } from "lucide-react";
+import { getTravelPostBySlug, getRelatedTravelPosts } from "@/data/travel";
+import { ArrowLeft, Share2, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";
 import { toast } from "@/components/ui/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const BlogPost = () => {
+const TravelPost = () => {
   const { t } = useLanguage();
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const post = getPostBySlug(slug || "");
+  const post = getTravelPostBySlug(slug || "");
   
   useEffect(() => {
     if (!post) {
-      navigate("/blog");
+      navigate("/travel");
     }
     
     // Scroll to top when post loads
@@ -26,7 +26,7 @@ const BlogPost = () => {
   
   if (!post) return null;
   
-  const relatedPosts = getRelatedPosts(post.id, post.category, 3);
+  const relatedPosts = getRelatedTravelPosts(post.id, post.region, 3);
   
   const handleShare = async () => {
     if (navigator.share) {
@@ -54,11 +54,11 @@ const BlogPost = () => {
         {/* Back button */}
         <div className="container mx-auto px-4 sm:px-6 mb-8">
           <Link 
-            to="/blog" 
+            to="/travel" 
             className="inline-flex items-center gap-2 hover:opacity-70 transition-opacity"
           >
             <ArrowLeft size={16} />
-            <span>{t("common.back")} to Blog</span>
+            <span>{t("common.back")} to Travel</span>
           </Link>
         </div>
         
@@ -66,9 +66,11 @@ const BlogPost = () => {
         <header className="container mx-auto px-4 sm:px-6 max-w-4xl mb-12">
           <div className="space-y-4 text-center animate-slide-up">
             <div className="flex justify-center gap-4 items-center text-sm">
-              <span className="px-3 py-1 bg-gray-100">{post.category}</span>
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100">
+                <MapPin size={14} />
+                {post.region}
+              </span>
               <time dateTime={post.date} className="text-gray-500">{formatDate(post.date)}</time>
-              <span className="text-gray-500">{post.readingTime}</span>
             </div>
             
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight">
@@ -82,7 +84,7 @@ const BlogPost = () => {
         </header>
         
         {/* Featured Image */}
-        <div className="container mx-auto px-4 sm:px-6 max-w-4xl mb-12">
+        <div className="container mx-auto px-4 sm:px-6 max-w-5xl mb-12">
           <div className="aspect-[16/9] overflow-hidden">
             <img 
               src={post.coverImage} 
@@ -103,8 +105,8 @@ const BlogPost = () => {
           <div className="max-w-3xl mx-auto border-t border-b border-gray-200 py-6 my-12 flex justify-between items-center">
             <div className="text-sm">
               <p className="text-gray-500">{t("common.posted_in")}</p>
-              <Link to={`/blog?category=${post.category}`} className="font-medium hover-underline">
-                {post.category}
+              <Link to={`/travel?region=${post.region}`} className="font-medium hover-underline">
+                {post.region}
               </Link>
             </div>
             
@@ -124,13 +126,15 @@ const BlogPost = () => {
         {relatedPosts.length > 0 && (
           <section className="bg-gray-100 py-16 mt-16">
             <div className="container mx-auto px-4 sm:px-6">
-              <h2 className="text-2xl font-medium mb-8 text-center">{t("common.related")} Posts</h2>
+              <h2 className="text-2xl font-medium mb-8 text-center">
+                {t("common.related")} Travel Stories
+              </h2>
               
               <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 {relatedPosts.map(relatedPost => (
                   <Link 
                     key={relatedPost.id} 
-                    to={`/blog/${relatedPost.slug}`} 
+                    to={`/travel/${relatedPost.slug}`} 
                     className="group block"
                   >
                     <div className="overflow-hidden mb-4 aspect-[16/9]">
@@ -144,8 +148,8 @@ const BlogPost = () => {
                       {relatedPost.title}
                     </h3>
                     <div className="flex items-center gap-4 text-sm text-gray-500 mt-2">
+                      <span>{relatedPost.region}</span>
                       <time dateTime={relatedPost.date}>{formatDate(relatedPost.date)}</time>
-                      <span>{relatedPost.readingTime}</span>
                     </div>
                   </Link>
                 ))}
@@ -158,4 +162,4 @@ const BlogPost = () => {
   );
 };
 
-export default BlogPost;
+export default TravelPost;

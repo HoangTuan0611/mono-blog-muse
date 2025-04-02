@@ -1,12 +1,20 @@
 
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,9 +29,12 @@ const Header = () => {
   const closeMenu = () => setMobileMenuOpen(false);
 
   const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Blog", path: "/blog" },
-    { name: "About", path: "/about" },
+    { name: t("nav.home"), path: "/" },
+    { name: t("nav.blog"), path: "/blog" },
+    { name: t("nav.certifications"), path: "/certifications" },
+    { name: t("nav.videos"), path: "/videos" },
+    { name: t("nav.travel"), path: "/travel" },
+    { name: t("nav.about"), path: "/about" },
   ];
 
   return (
@@ -53,6 +64,18 @@ const Header = () => {
               {link.name}
             </Link>
           ))}
+
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex items-center gap-1">
+              <Globe size={16} />
+              <span className="text-sm uppercase tracking-wide">{language.toUpperCase()}</span>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onClick={() => setLanguage('en')}>English</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLanguage('fr')}>Français</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLanguage('es')}>Español</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
 
         {/* Mobile Menu Toggle */}
@@ -77,6 +100,27 @@ const Header = () => {
                 {link.name}
               </Link>
             ))}
+            
+            <div className="border-t border-gray-100 mt-2 pt-2">
+              <button 
+                className="py-3 px-6 hover:bg-gray-100 transition-colors w-full text-left" 
+                onClick={() => {setLanguage('en'); closeMenu();}}
+              >
+                English
+              </button>
+              <button 
+                className="py-3 px-6 hover:bg-gray-100 transition-colors w-full text-left" 
+                onClick={() => {setLanguage('fr'); closeMenu();}}
+              >
+                Français
+              </button>
+              <button 
+                className="py-3 px-6 hover:bg-gray-100 transition-colors w-full text-left" 
+                onClick={() => {setLanguage('es'); closeMenu();}}
+              >
+                Español
+              </button>
+            </div>
           </div>
         )}
       </div>

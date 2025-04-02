@@ -1,8 +1,10 @@
 
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
 
   return (
     <footer className="mt-16 border-t border-gray-200 py-12">
@@ -11,7 +13,7 @@ const Footer = () => {
           <div>
             <h2 className="font-medium text-xl mb-4">Minimalist</h2>
             <p className="text-gray-500 max-w-md">
-              A personal blog where I share my thoughts on design, technology, and life.
+              A personal portfolio and blog focused on minimalism, design, and creative pursuits.
             </p>
           </div>
           
@@ -19,9 +21,12 @@ const Footer = () => {
             <div>
               <h3 className="uppercase text-xs tracking-wider text-gray-500 mb-4 font-sans">Navigation</h3>
               <ul className="space-y-2">
-                <li><Link to="/" className="hover-underline">Home</Link></li>
-                <li><Link to="/blog" className="hover-underline">Blog</Link></li>
-                <li><Link to="/about" className="hover-underline">About</Link></li>
+                <li><Link to="/" className="hover-underline">{t("nav.home")}</Link></li>
+                <li><Link to="/blog" className="hover-underline">{t("nav.blog")}</Link></li>
+                <li><Link to="/certifications" className="hover-underline">{t("nav.certifications")}</Link></li>
+                <li><Link to="/videos" className="hover-underline">{t("nav.videos")}</Link></li>
+                <li><Link to="/travel" className="hover-underline">{t("nav.travel")}</Link></li>
+                <li><Link to="/about" className="hover-underline">{t("nav.about")}</Link></li>
               </ul>
             </div>
             
@@ -31,6 +36,7 @@ const Footer = () => {
                 <li><a href="#" className="hover-underline">Twitter</a></li>
                 <li><a href="#" className="hover-underline">Instagram</a></li>
                 <li><a href="#" className="hover-underline">Github</a></li>
+                <li><a href="#" className="hover-underline">LinkedIn</a></li>
               </ul>
             </div>
           </div>
