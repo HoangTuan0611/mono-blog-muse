@@ -5,12 +5,15 @@ import Footer from "@/components/Footer";
 import { ArrowUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Helmet } from "react-helmet-async";
 
 interface MainLayoutProps {
   children: React.ReactNode;
+  title?: string;
+  description?: string;
 }
 
-const MainLayout = ({ children }: MainLayoutProps) => {
+const MainLayout = ({ children, title, description }: MainLayoutProps) => {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const { theme } = useLanguage();
 
@@ -23,6 +26,29 @@ const MainLayout = ({ children }: MainLayoutProps) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    // Optimize the animation by observing elements only when they're in viewport
+    const elements = document.querySelectorAll('.animate-on-scroll');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          // Once the animation is triggered, we can stop observing this element
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    elements.forEach(el => observer.observe(el));
+    
+    return () => {
+      if (elements) {
+        elements.forEach(el => observer.unobserve(el));
+      }
+    };
+  }, []);
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -32,6 +58,13 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   return (
     <div className="flex flex-col min-h-screen dark:bg-gray-900 dark:text-white transition-colors duration-300">
+      <Helmet>
+        {title && <title>{title}</title>}
+        {description && <meta name="description" content={description} />}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="canonical" href={window.location.href} />
+      </Helmet>
       <Header />
       <main className="flex-1 pt-24">
         {children}
