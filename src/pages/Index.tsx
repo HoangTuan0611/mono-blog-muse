@@ -24,6 +24,7 @@ const Index = () => {
   const recentTravelPosts = travelPosts.slice(0, 3);
   const [animatedElements, setAnimatedElements] = useState<NodeListOf<Element> | null>(null);
   const [activePost, setActivePost] = useState<string | null>(null);
+  const trendingScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const elements = document.querySelectorAll('.animate-on-scroll');
@@ -48,6 +49,23 @@ const Index = () => {
       }
     };
   }, []);
+
+  // Handle trending section navigation
+  const handlePrevSlide = () => {
+    if (trendingScrollRef.current) {
+      const scrollContainer = trendingScrollRef.current;
+      const cardWidth = 280; // Average width of a card including gap
+      scrollContainer.scrollBy({ left: -cardWidth * 2, behavior: 'smooth' });
+    }
+  };
+
+  const handleNextSlide = () => {
+    if (trendingScrollRef.current) {
+      const scrollContainer = trendingScrollRef.current;
+      const cardWidth = 280; // Average width of a card including gap
+      scrollContainer.scrollBy({ left: cardWidth * 2, behavior: 'smooth' });
+    }
+  };
 
   return (
     <MainLayout 
@@ -85,17 +103,30 @@ const Index = () => {
               </p>
             </div>
             <div className="hidden md:flex gap-2">
-              <button id="prev-slide" className="p-2 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+              <button 
+                id="prev-slide" 
+                className="p-2 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                onClick={handlePrevSlide}
+                aria-label="Previous topics"
+              >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              <button id="next-slide" className="p-2 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+              <button 
+                id="next-slide" 
+                className="p-2 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                onClick={handleNextSlide}
+                aria-label="Next topics"
+              >
                 <ChevronRight className="w-5 h-5" />
               </button>
             </div>
           </div>
           
           <div className="relative overflow-hidden">
-            <div className="flex gap-5 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory">
+            <div 
+              ref={trendingScrollRef}
+              className="flex gap-5 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory scroll-smooth"
+            >
               {/* Trending Topics Cards based on the provided image */}
               <div className="trending-card min-w-[200px] w-[220px] flex-shrink-0 flex items-center justify-center p-8 text-white snap-start animate-on-scroll" style={{ '--delay': 2 } as React.CSSProperties}>
                 <div className="text-center">
