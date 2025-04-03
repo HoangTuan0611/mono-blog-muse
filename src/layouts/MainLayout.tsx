@@ -6,6 +6,7 @@ import { ArrowUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Helmet } from "react-helmet-async";
+import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -16,6 +17,9 @@ interface MainLayoutProps {
 const MainLayout = ({ children, title, description }: MainLayoutProps) => {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const { theme } = useLanguage();
+  
+  // Use our custom hook for animations
+  useAnimateOnScroll();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,29 +28,6 @@ const MainLayout = ({ children, title, description }: MainLayoutProps) => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    // Optimize the animation by observing elements only when they're in viewport
-    const elements = document.querySelectorAll('.animate-on-scroll');
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          // Once the animation is triggered, we can stop observing this element
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    
-    elements.forEach(el => observer.observe(el));
-    
-    return () => {
-      if (elements) {
-        elements.forEach(el => observer.unobserve(el));
-      }
-    };
   }, []);
 
   const scrollToTop = () => {
