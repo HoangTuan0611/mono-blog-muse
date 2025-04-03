@@ -1,4 +1,3 @@
-
 import MainLayout from "@/layouts/MainLayout";
 
 const About = () => {
@@ -6,7 +5,7 @@ const About = () => {
     <MainLayout>
       <section className="container mx-auto px-4 sm:px-6 pt-12 pb-16 md:pt-16 md:pb-24">
         <div className="max-w-3xl mx-auto">
-          <div className="animate-slide-up">
+          <div className="animate-slide-up hardware-accelerated">
             <h1 className="text-4xl md:text-5xl font-medium tracking-tight mb-12">
               About
             </h1>
@@ -19,7 +18,7 @@ const About = () => {
               />
             </div>
 
-            <div className="prose prose-lg max-w-none font-serif">
+            <div className="prose prose-lg max-w-none font-serif fade-in">
               <p className="lead">
                 Hello, I'm a designer and writer passionate about the intersection of aesthetics and functionality. My work focuses on minimalist approaches to design and living.
               </p>
@@ -78,7 +77,7 @@ const About = () => {
               </p>
             </div>
 
-            <div className="mt-12 pt-8 border-t border-gray-200">
+            <div className="mt-12 pt-8 border-t border-gray-200 fade-in fade-in-5">
               <h3 className="text-xl font-medium mb-6">Connect With Me</h3>
               <div className="flex gap-4">
                 <a href="#" className="px-4 py-2 border border-black hover:bg-black hover:text-white transition-colors">

@@ -13,7 +13,7 @@ const FeaturedPostsSection = ({ featuredPosts }: FeaturedPostsSectionProps) => {
   return (
     <section className="bg-gray-100 dark:bg-gray-800 py-16 md:py-24">
       <div className="container mx-auto px-4 sm:px-6">
-        <h2 className="text-3xl font-medium mb-12 text-center animate-on-scroll">Featured Posts</h2>
+        <h2 className="text-3xl font-medium mb-12 text-center fade-in fade-in-1">Featured Posts</h2>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredPosts.map((post, index) => (

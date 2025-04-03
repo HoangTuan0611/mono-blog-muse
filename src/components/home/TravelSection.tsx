@@ -28,8 +28,8 @@ const TravelSection = ({ travelPosts }: TravelSectionProps) => {
       <div className="container mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-end mb-12">
           <div>
-            <h2 className="text-3xl font-medium animate-on-scroll">{t("travel.title")}</h2>
-            <p className="text-gray-600 dark:text-gray-300 font-serif mt-2 animate-on-scroll" style={{ '--delay': 1 } as React.CSSProperties}>
+            <h2 className="text-3xl font-medium fade-in fade-in-1">{t("travel.title")}</h2>
+            <p className="text-gray-600 dark:text-gray-300 font-serif mt-2 fade-in fade-in-2">
               Adventures and explorations around the world
             </p>
           </div>
@@ -44,8 +44,7 @@ const TravelSection = ({ travelPosts }: TravelSectionProps) => {
               <CarouselItem key={post.id} className="md:basis-1/2 lg:basis-1/3">
                 <Link 
                   to={`/travel/${post.slug}`} 
-                  className="group block animate-on-scroll h-full"
-                  style={{ '--delay': index + 2 } as React.CSSProperties}
+                  className={`group block fade-in hover-grow fade-in-${index + 3} h-full`}
                 >
                   <Card className="border-0 shadow-md h-full dark:bg-gray-700">
                     <CardContent className="p-0">

@@ -47,10 +47,10 @@ const Videos = () => {
         {/* Videos Grid */}
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredVideos.map((video) => (
+            {filteredVideos.map((video, index) => (
               <div 
                 key={video.id} 
-                className="animate-on-scroll"
+                className={`fade-in hover-grow fade-in-${Math.min(index + 1, 5)}`}
                 onClick={() => setSelectedVideo(video.videoId)}
               >
                 <div className="aspect-video relative overflow-hidden group cursor-pointer">

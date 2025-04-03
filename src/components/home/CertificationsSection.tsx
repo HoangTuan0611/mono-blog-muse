@@ -16,8 +16,8 @@ const CertificationsSection = ({ certifications }: CertificationsSectionProps) =
       <div className="container mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-end mb-12">
           <div>
-            <h2 className="text-3xl font-medium animate-on-scroll">{t("certifications.title")}</h2>
-            <p className="text-gray-300 font-serif mt-2 animate-on-scroll" style={{ '--delay': 1 } as React.CSSProperties}>
+            <h2 className="text-3xl font-medium fade-in fade-in-1">{t("certifications.title")}</h2>
+            <p className="text-gray-300 font-serif mt-2 fade-in fade-in-2">
               Professional qualifications and achievements
             </p>
           </div>
@@ -30,8 +30,7 @@ const CertificationsSection = ({ certifications }: CertificationsSectionProps) =
           {certifications.map((cert, index) => (
             <div 
               key={cert.id} 
-              className="border border-gray-800 p-6 hover:bg-white/5 transition-colors animate-on-scroll"
-              style={{ '--delay': index + 2 } as React.CSSProperties}
+              className={`border border-gray-800 p-6 hover:bg-white/5 transition-colors fade-in hover-grow fade-in-${index + 3}`}
             >
               <div className="flex justify-between items-start mb-4">
                 <h3 className="text-xl font-medium">{cert.name}</h3>

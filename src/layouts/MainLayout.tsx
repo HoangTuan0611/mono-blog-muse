@@ -6,7 +6,6 @@ import { ArrowUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Helmet } from "react-helmet-async";
-import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -17,9 +16,6 @@ interface MainLayoutProps {
 const MainLayout = ({ children, title, description }: MainLayoutProps) => {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const { theme } = useLanguage();
-  
-  // Use our custom hook for animations
-  useAnimateOnScroll();
 
   useEffect(() => {
     const handleScroll = () => {

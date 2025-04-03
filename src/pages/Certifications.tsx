@@ -45,10 +45,10 @@ const Certifications = () => {
         {/* Certifications Grid */}
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8">
-            {filteredCertifications.map((cert) => (
+            {filteredCertifications.map((cert, index) => (
               <div 
                 key={cert.id} 
-                className="border border-gray-200 p-6 hover:shadow-md transition-shadow animate-on-scroll"
+                className={`border border-gray-200 p-6 hover:shadow-md transition-shadow fade-in hover-grow fade-in-${Math.min(index + 1, 5)}`}
               >
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-xl font-medium">{cert.name}</h3>

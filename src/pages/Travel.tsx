@@ -62,11 +62,11 @@ const Travel = () => {
         <div className="max-w-6xl mx-auto">
           {filteredPosts.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredPosts.map((post) => (
+              {filteredPosts.map((post, index) => (
                 <Link 
                   key={post.id}
                   to={`/travel/${post.slug}`} 
-                  className="group block animate-on-scroll"
+                  className={`group block fade-in hover-grow fade-in-${Math.min(index + 1, 5)}`}
                 >
                   <div className="overflow-hidden aspect-[4/3]">
                     <img

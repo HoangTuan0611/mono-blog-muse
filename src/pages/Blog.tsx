@@ -62,8 +62,8 @@ const Blog = () => {
         <div className="max-w-5xl mx-auto">
           {filteredPosts.length > 0 ? (
             <div className="grid gap-12">
-              {filteredPosts.map((post) => (
-                <BlogPostCard key={post.id} post={post} />
+              {filteredPosts.map((post, index) => (
+                <BlogPostCard key={post.id} post={post} index={index} />
               ))}
             </div>
           ) : (
@@ -78,11 +78,11 @@ const Blog = () => {
   );
 };
 
-const BlogPostCard = ({ post }: { post: Post }) => {
+const BlogPostCard = ({ post, index }: { post: Post; index: number }) => {
   const { t } = useLanguage();
   
   return (
-    <Link to={`/blog/${post.slug}`} className="group grid md:grid-cols-5 gap-8 animate-on-scroll">
+    <Link to={`/blog/${post.slug}`} className={`group grid md:grid-cols-5 gap-8 fade-in fade-in-${Math.min(index + 1, 5)} hover-grow`}>
       <div className="md:col-span-2 overflow-hidden aspect-[4/3]">
         <img
           src={post.coverImage}

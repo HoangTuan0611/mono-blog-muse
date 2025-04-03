@@ -1,24 +1,43 @@
 
-/* Base styles for animated elements */
-.animate-on-scroll {
+/* Basic fade-in animation for page elements */
+.fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  will-change: opacity, transform;
 }
 
-/* Animated elements that are visible */
-.animate-on-scroll.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Different delay times based on custom properties */
-.animate-on-scroll[style*="--delay"] {
-  transition-delay: calc(var(--delay, 0) * 0.1s);
+/* Staggered animations with different delays */
+.fade-in-1 {
+  animation-delay: 0.1s;
 }
 
-/* Add animate-slide-up class for hero sections */
+.fade-in-2 {
+  animation-delay: 0.2s;
+}
+
+.fade-in-3 {
+  animation-delay: 0.3s;
+}
+
+.fade-in-4 {
+  animation-delay: 0.4s;
+}
+
+.fade-in-5 {
+  animation-delay: 0.5s;
+}
+
+/* Slide up animation for hero sections */
 .animate-slide-up {
   animation: slideUp 0.8s ease-out forwards;
   opacity: 0;
@@ -35,12 +54,20 @@
   }
 }
 
-/* Fix for animation persistence across tab changes */
-.animate-on-scroll.is-visible {
-  /* Force hardware acceleration for smoother animations */
+/* Smooth hover transitions */
+.hover-grow {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-grow:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Fix for hardware acceleration */
+.hardware-accelerated {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  /* Ensure elements stay visible after animation completes */
-  opacity: 1 !important;
-  transform: translateY(0) !important;
+  transform: translateZ(0);
+  will-change: transform, opacity;
 }
