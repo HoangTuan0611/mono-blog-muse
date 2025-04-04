@@ -13,11 +13,11 @@ const RecentPostsSection = ({ recentPosts }: RecentPostsSectionProps) => {
   const [activePost, setActivePost] = useState<string | null>(null);
   
   return (
-    <section className="py-16 md:py-24 container mx-auto px-4 sm:px-6">
+    <section className="py-16 md:py-24 container mx-auto px-4 sm:px-6 visible">
       <div className="flex justify-between items-end mb-12">
         <div>
-          <h2 className="text-3xl font-medium fade-in fade-in-1">Recent Posts</h2>
-          <p className="text-gray-600 dark:text-gray-300 font-serif mt-2 fade-in fade-in-2">
+          <h2 className="text-3xl font-medium">Recent Posts</h2>
+          <p className="text-gray-600 dark:text-gray-300 font-serif mt-2">
             Latest articles from our blog
           </p>
         </div>

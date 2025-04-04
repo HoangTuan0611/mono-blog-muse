@@ -1,4 +1,3 @@
-
 import { useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -23,12 +22,12 @@ const TrendingTopicsSection = () => {
   };
 
   return (
-    <section className="py-16 md:py-20 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <section className="py-16 md:py-20 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 visible">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-end mb-8">
           <div>
-            <h2 className="text-3xl font-medium mb-2 animate-on-scroll">Trending this month</h2>
-            <p className="text-gray-600 dark:text-gray-300 font-serif animate-on-scroll" style={{ '--delay': 1 } as React.CSSProperties}>
+            <h2 className="text-3xl font-medium mb-2">Trending this month</h2>
+            <p className="text-gray-600 dark:text-gray-300 font-serif">
               Popular topics our readers are exploring right now
             </p>
           </div>
@@ -52,13 +51,13 @@ const TrendingTopicsSection = () => {
           </div>
         </div>
         
-        <div className="relative overflow-hidden">
+        <div className="relative overflow-visible">
           <div 
             ref={trendingScrollRef}
             className="flex gap-5 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory scroll-smooth"
           >
             {/* Trending Topics Cards */}
-            <div className="trending-card min-w-[200px] w-[220px] flex-shrink-0 flex items-center justify-center p-8 text-white snap-start animate-on-scroll" style={{ '--delay': 2 } as React.CSSProperties}>
+            <div className="trending-card min-w-[200px] w-[220px] flex-shrink-0 flex items-center justify-center p-8 text-white snap-start">
               <div className="text-center">
                 <div className="mb-4 inline-block bg-white/20 p-3 rounded-full">
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
@@ -70,7 +69,7 @@ const TrendingTopicsSection = () => {
             </div>
             
             {/* Data Preprocessing */}
-            <div className="topic-card min-w-[280px] w-[280px] flex-shrink-0 p-6 snap-start animate-on-scroll" style={{ '--delay': 3 } as React.CSSProperties}>
+            <div className="topic-card min-w-[280px] w-[280px] flex-shrink-0 p-6 snap-start">
               <h3 className="text-lg font-medium mb-2">Data Preprocessing | Các phương pháp tiền xử lí dữ liệu</h3>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">(Đang cập nhật)</p>
               <div className="flex flex-wrap gap-2 mb-4">
@@ -89,7 +88,7 @@ const TrendingTopicsSection = () => {
             </div>
             
             {/* Database Languages */}
-            <div className="topic-card min-w-[280px] w-[280px] flex-shrink-0 p-6 snap-start animate-on-scroll" style={{ '--delay': 4 } as React.CSSProperties}>
+            <div className="topic-card min-w-[280px] w-[280px] flex-shrink-0 p-6 snap-start">
               <h3 className="text-lg font-medium mb-2">Database Languages and Entity Relationship</h3>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">10</p>
               <div className="flex flex-wrap gap-2 mb-4">
@@ -105,7 +104,7 @@ const TrendingTopicsSection = () => {
             </div>
             
             {/* DataMesh */}
-            <div className="topic-card min-w-[280px] w-[280px] flex-shrink-0 p-6 snap-start animate-on-scroll" style={{ '--delay': 5 } as React.CSSProperties}>
+            <div className="topic-card min-w-[280px] w-[280px] flex-shrink-0 p-6 snap-start">
               <h3 className="text-lg font-medium mb-2">DataMesh: Những điều cơ bản nhất bạn cần biết</h3>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">(Updating)</p>
               <div className="flex flex-wrap gap-2 mb-4">
@@ -123,7 +122,7 @@ const TrendingTopicsSection = () => {
             </div>
             
             {/* MongoDB Aggregation - Active/Highlighted Card */}
-            <div className="topic-card active min-w-[280px] w-[280px] flex-shrink-0 p-6 snap-start animate-on-scroll" style={{ '--delay': 6 } as React.CSSProperties}>
+            <div className="topic-card active min-w-[280px] w-[280px] flex-shrink-0 p-6 snap-start">
               <h3 className="text-lg font-medium mb-2">MongoDB Aggregation</h3>
               <div className="flex flex-wrap gap-2 mb-4">
                 <span className="tag tag-certification">#CERTIFICATION</span>
@@ -139,7 +138,7 @@ const TrendingTopicsSection = () => {
             </div>
             
             {/* Postgres Repository */}
-            <div className="topic-card min-w-[280px] w-[280px] flex-shrink-0 p-6 snap-start animate-on-scroll" style={{ '--delay': 7 } as React.CSSProperties}>
+            <div className="topic-card min-w-[280px] w-[280px] flex-shrink-0 p-6 snap-start">
               <h3 className="text-lg font-medium mb-2">Postgres Repository</h3>
               <div className="flex flex-wrap gap-2 mb-4">
                 <span className="tag tag-certification">#CERTIFICATION</span>
@@ -155,7 +154,7 @@ const TrendingTopicsSection = () => {
             </div>
             
             {/* Campaign manager */}
-            <div className="topic-card min-w-[280px] w-[280px] flex-shrink-0 p-6 snap-start animate-on-scroll" style={{ '--delay': 8 } as React.CSSProperties}>
+            <div className="topic-card min-w-[280px] w-[280px] flex-shrink-0 p-6 snap-start">
               <h3 className="text-lg font-medium mb-2">Campaign manager 360 Certification Exam</h3>
               <div className="flex flex-wrap gap-2 mb-4">
                 <span className="tag tag-certification">#CERTIFICATION</span>

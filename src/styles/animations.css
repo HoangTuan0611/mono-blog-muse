@@ -2,7 +2,7 @@
 /* Basic fade-in animation for page elements */
 .fade-in {
   animation: fadeIn 0.8s ease-out forwards;
-  opacity: 0;
+  opacity: 1 !important; /* Ensure elements remain visible */
 }
 
 @keyframes fadeIn {
@@ -40,7 +40,7 @@
 /* Slide up animation for hero sections */
 .animate-slide-up {
   animation: slideUp 0.8s ease-out forwards;
-  opacity: 0;
+  opacity: 1 !important; /* Ensure elements remain visible */
 }
 
 @keyframes slideUp {
@@ -71,3 +71,11 @@
   transform: translateZ(0);
   will-change: transform, opacity;
 }
+
+/* Ensure elements are visible */
+.visible {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+}
+
