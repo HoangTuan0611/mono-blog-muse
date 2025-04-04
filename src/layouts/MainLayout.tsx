@@ -23,13 +23,6 @@ const MainLayout = ({ children, title, description }: MainLayoutProps) => {
     };
 
     window.addEventListener("scroll", handleScroll);
-    
-    // Ensure content is visible
-    const mainContent = document.querySelector('main');
-    if (mainContent) {
-      mainContent.classList.add('visible');
-    }
-    
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -50,7 +43,7 @@ const MainLayout = ({ children, title, description }: MainLayoutProps) => {
         <link rel="canonical" href={window.location.href} />
       </Helmet>
       <Header />
-      <main className="flex-1 pt-24 visible">
+      <main className="flex-1 pt-24 fade-in">
         {children}
       </main>
       <Footer />

@@ -3,6 +3,8 @@
 .fade-in {
   animation: fadeIn 0.8s ease-out forwards;
   opacity: 1 !important; /* Ensure elements remain visible */
+  visibility: visible !important;
+  display: block !important;
 }
 
 @keyframes fadeIn {
@@ -72,10 +74,26 @@
   will-change: transform, opacity;
 }
 
-/* Ensure elements are visible */
-.visible {
-  visibility: visible !important;
-  opacity: 1 !important;
-  display: block !important;
+/* Hover underline effect */
+.hover-underline {
+  position: relative;
+  display: inline-block;
 }
 
+.hover-underline:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: currentColor;
+  transform-origin: bottom right;
+  transition: transform 0.3s ease-out;
+}
+
+.hover-underline:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}

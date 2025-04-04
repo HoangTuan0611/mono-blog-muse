@@ -11,7 +11,7 @@ interface FeaturedPostsSectionProps {
 
 const FeaturedPostsSection = ({ featuredPosts }: FeaturedPostsSectionProps) => {
   return (
-    <section className="bg-gray-100 dark:bg-gray-800 py-16 md:py-24 visible">
+    <section className="bg-gray-100 dark:bg-gray-800 py-16 md:py-24 fade-in">
       <div className="container mx-auto px-4 sm:px-6">
         <h2 className="text-3xl font-medium mb-12 text-center">Featured Posts</h2>
         

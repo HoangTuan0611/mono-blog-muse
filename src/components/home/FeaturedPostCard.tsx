@@ -9,7 +9,7 @@ interface FeaturedPostCardProps {
 }
 
 const FeaturedPostCard = ({ post, delay = 0 }: FeaturedPostCardProps) => (
-  <Link to={`/blog/${post.slug}`} className="group block animate-on-scroll" style={{ '--delay': delay + 2 } as React.CSSProperties}>
+  <Link to={`/blog/${post.slug}`} className={`group block fade-in fade-in-${delay + 1}`}>
     <div className="overflow-hidden mb-4 aspect-[16/9] rounded-lg">
       <img
         src={post.coverImage}

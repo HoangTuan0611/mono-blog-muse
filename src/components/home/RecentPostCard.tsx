@@ -18,10 +18,9 @@ const RecentPostCard = ({ post, delay = 0, isActive = false, onMouseEnter, onMou
       <Link 
         to={`/blog/${post.slug}`} 
         className={cn(
-          "group block animate-on-scroll transition-all duration-300",
+          `group block fade-in fade-in-${delay + 1} transition-all duration-300`,
           isActive ? "scale-[1.02] shadow-lg" : ""
-        )} 
-        style={{ '--delay': delay + 2 } as React.CSSProperties}
+        )}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
