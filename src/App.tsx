@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,6 +13,7 @@ import Certifications from "./pages/Certifications";
 import Videos from "./pages/Videos";
 import Travel from "./pages/Travel";
 import TravelPost from "./pages/TravelPost";
+import CloudinaryDemo from "./pages/CloudinaryDemo";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
 const queryClient = new QueryClient();
@@ -35,6 +35,7 @@ const App = () => (
               <Route path="/videos" element={<Videos />} />
               <Route path="/travel" element={<Travel />} />
               <Route path="/travel/:slug" element={<TravelPost />} />
+              <Route path="/cloudinary" element={<CloudinaryDemo />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

@@ -1,18 +1,48 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import MainLayout from "@/layouts/MainLayout";
-import { posts, Post } from "@/data/posts";
+import { Post } from "@/data/posts";
 import { formatDate } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-
-const CATEGORIES = ["All", ...Array.from(new Set(posts.map(post => post.category)))];
+import { seedPosts, getAllPostsFromFirebase } from "@/lib/firebaseUtils";
 
 const Blog = () => {
   const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [categories, setCategories] = useState<string[]>(["All"]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        setLoading(true);
+        
+        // Seed posts if collection is empty
+        await seedPosts();
+        
+        // Fetch all posts from Firebase
+        const postsData = await getAllPostsFromFirebase();
+        setPosts(postsData as Post[]);
+        
+        // Extract unique categories from posts
+        const uniqueCategories = Array.from(
+          new Set(postsData.map((post: any) => post.category))
+        );
+        setCategories(["All", ...uniqueCategories]);
+      } catch (err) {
+        console.error("Error fetching posts:", err);
+        setError("Failed to load posts. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   const filteredPosts = posts.filter(post => {
     const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
@@ -50,7 +80,7 @@ const Blog = () => {
           {/* Category Tabs */}
           <Tabs defaultValue={selectedCategory} onValueChange={handleCategoryChange} className="w-full mb-8">
             <TabsList className="w-full flex overflow-x-auto pb-2 bg-transparent justify-start md:justify-center gap-2 h-auto">
-              {CATEGORIES.map(category => (
+              {categories.map(category => (
                 <TabsTrigger 
                   key={category}
                   value={category}
@@ -65,7 +95,16 @@ const Blog = () => {
 
         {/* Blog Posts */}
         <div className="max-w-7xl mx-auto mt-8">
-          {filteredPosts.length > 0 ? (
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+              <p className="mt-4 text-gray-600">Loading posts...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <p className="text-red-500">{error}</p>
+            </div>
+          ) : filteredPosts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredPosts.map((post, index) => (
                 <BlogPostCard key={post.id} post={post} index={index} />

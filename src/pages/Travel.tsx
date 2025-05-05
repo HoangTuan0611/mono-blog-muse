@@ -1,19 +1,63 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import MainLayout from "@/layouts/MainLayout";
 import { travelPosts } from "@/data/travel";
 import { formatDate } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { getAllTravelPostsFromFirebase, seedTravelPosts } from "@/lib/firebaseUtils";
+import { Skeleton } from "@/components/ui/skeleton";
+
+// Define the TravelPost interface
+interface TravelPost {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  coverImage: string;
+  date: string;
+  region: string;
+  location: string;
+  coordinates?: { lat: number; lng: number };
+  featured?: boolean;
+}
 
 const Travel = () => {
   const { t } = useLanguage();
   const [selectedRegion, setSelectedRegion] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [posts, setPosts] = useState<TravelPost[]>([]);
+  const [regions, setRegions] = useState<string[]>(["All"]);
+  const [loading, setLoading] = useState(true);
 
-  const regions = ["All", ...new Set(travelPosts.map(post => post.region))];
+  useEffect(() => {
+    const fetchTravelPosts = async () => {
+      try {
+        setLoading(true);
+        // Seed travel posts if the collection is empty
+        await seedTravelPosts();
+        
+        // Get all travel posts from Firebase
+        const travelPostsData = await getAllTravelPostsFromFirebase() as TravelPost[];
+        setPosts(travelPostsData);
+        
+        // Extract unique regions for filtering
+        const uniqueRegions = ["All", ...new Set(travelPostsData.map(post => post.region))];
+        setRegions(uniqueRegions);
+      } catch (error) {
+        console.error("Error fetching travel posts:", error);
+        // Fallback to static data if Firebase fetch fails
+        setPosts(travelPosts);
+        setRegions(["All", ...new Set(travelPosts.map(post => post.region))]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchTravelPosts();
+  }, []);
   
-  const filteredPosts = travelPosts.filter(post => {
+  const filteredPosts = posts.filter(post => {
     const matchesRegion = selectedRegion === "All" || post.region === selectedRegion;
     const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
@@ -60,7 +104,21 @@ const Travel = () => {
 
         {/* Travel Posts Grid */}
         <div className="max-w-6xl mx-auto">
-          {filteredPosts.length > 0 ? (
+          {loading ? (
+            // Loading skeletons
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[...Array(6)].map((_, index) => (
+                <div key={index} className="space-y-4">
+                  <Skeleton className="w-full h-64" />
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-20" />
+                    <Skeleton className="h-6 w-3/4" />
+                    <Skeleton className="h-4 w-full" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : filteredPosts.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredPosts.map((post, index) => (
                 <Link 

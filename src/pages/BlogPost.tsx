@@ -1,34 +1,66 @@
-
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import MainLayout from "@/layouts/MainLayout";
-import { getPostBySlug, getRelatedPosts } from "@/data/posts";
+import { Post } from "@/data/posts";
 import { ArrowLeft, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";
 import { toast } from "@/components/ui/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { seedPosts, getPostBySlugFromFirebase, getRelatedPostsFromFirebase } from "@/lib/firebaseUtils";
 
 const BlogPost = () => {
   const { t } = useLanguage();
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const post = getPostBySlug(slug || "");
+  const [post, setPost] = useState<Post | null>(null);
+  const [relatedPosts, setRelatedPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
   useEffect(() => {
-    if (!post) {
-      navigate("/blog");
-    }
+    const fetchPost = async () => {
+      try {
+        setLoading(true);
+        
+        // Seed posts if collection is empty
+        await seedPosts();
+        
+        if (!slug) {
+          navigate("/blog");
+          return;
+        }
+        
+        // Fetch post by slug from Firebase
+        const postData = await getPostBySlugFromFirebase(slug);
+        
+        if (!postData) {
+          navigate("/blog");
+          return;
+        }
+        
+        setPost(postData as Post);
+        
+        // Fetch related posts
+        const relatedData = await getRelatedPostsFromFirebase(postData.id, postData.category, 3);
+        setRelatedPosts(relatedData as Post[]);
+      } catch (err) {
+        console.error("Error fetching post:", err);
+        setError("Failed to load post. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPost();
     
     // Scroll to top when post loads
     window.scrollTo(0, 0);
-  }, [post, navigate]);
-  
-  if (!post) return null;
-  
-  const relatedPosts = getRelatedPosts(post.id, post.category, 3);
+  }, [slug, navigate]);
   
   const handleShare = async () => {
+    if (!post) return;
+    
     if (navigator.share) {
       try {
         await navigator.share({
@@ -47,6 +79,34 @@ const BlogPost = () => {
       });
     }
   };
+
+  if (loading) {
+    return (
+      <MainLayout>
+        <div className="container mx-auto px-4 sm:px-6 py-16 text-center">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+          <p className="mt-4 text-gray-600">Loading post...</p>
+        </div>
+      </MainLayout>
+    );
+  }
+
+  if (error || !post) {
+    return (
+      <MainLayout>
+        <div className="container mx-auto px-4 sm:px-6 py-16 text-center">
+          <p className="text-red-500">{error || "Post not found"}</p>
+          <Link 
+            to="/blog" 
+            className="inline-flex items-center gap-2 hover:opacity-70 transition-opacity mt-4"
+          >
+            <ArrowLeft size={16} />
+            <span>{t("common.back")} to Blog</span>
+          </Link>
+        </div>
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout>

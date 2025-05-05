@@ -1,39 +1,73 @@
-
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import MainLayout from "@/layouts/MainLayout";
-import { getTravelPostBySlug, getRelatedTravelPosts } from "@/data/travel";
+import { getTravelPostBySlug, getRelatedTravelPosts, TravelPost } from "@/data/travel";
 import { ArrowLeft, Share2, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";
 import { toast } from "@/components/ui/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { getTravelPostBySlugFromFirebase, getRelatedTravelPostsFromFirebase } from "@/lib/firebaseUtils";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const TravelPost = () => {
+const TravelPostPage = () => {
   const { t } = useLanguage();
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const post = getTravelPostBySlug(slug || "");
+  const [post, setPost] = useState<TravelPost | null>(null);
+  const [relatedPosts, setRelatedPosts] = useState<TravelPost[]>([]);
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    if (!post) {
-      navigate("/travel");
-    }
+    const fetchPostData = async () => {
+      try {
+        setLoading(true);
+        if (!slug) {
+          navigate("/travel");
+          return;
+        }
+        
+        // Fetch post from Firebase
+        const postData = await getTravelPostBySlugFromFirebase(slug) as TravelPost | null;
+        
+        if (!postData) {
+          // Fallback to static data if not found in Firebase
+          const staticPost = getTravelPostBySlug(slug);
+          if (!staticPost) {
+            navigate("/travel");
+            return;
+          }
+          setPost(staticPost);
+          
+          // Get related posts from static data
+          const staticRelatedPosts = getRelatedTravelPosts(staticPost.id, staticPost.region, 3);
+          setRelatedPosts(staticRelatedPosts);
+        } else {
+          setPost(postData);
+          
+          // Fetch related posts
+          const relatedPostsData = await getRelatedTravelPostsFromFirebase(postData.id, postData.region, 3) as TravelPost[];
+          setRelatedPosts(relatedPostsData);
+        }
+      } catch (error) {
+        console.error("Error fetching travel post:", error);
+        navigate("/travel");
+      } finally {
+        setLoading(false);
+      }
+    };
     
+    fetchPostData();
     // Scroll to top when post loads
     window.scrollTo(0, 0);
-  }, [post, navigate]);
-  
-  if (!post) return null;
-  
-  const relatedPosts = getRelatedTravelPosts(post.id, post.region, 3);
+  }, [slug, navigate]);
   
   const handleShare = async () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: post.title,
-          text: post.excerpt,
+          title: post?.title || "",
+          text: post?.excerpt || "",
           url: window.location.href,
         });
       } catch (err) {
@@ -47,6 +81,30 @@ const TravelPost = () => {
       });
     }
   };
+
+  if (loading) {
+    return (
+      <MainLayout>
+        <div className="container mx-auto px-4 sm:px-6 py-16">
+          <div className="max-w-4xl mx-auto">
+            <Skeleton className="h-8 w-32 mb-8" />
+            <Skeleton className="h-16 w-full mb-4" />
+            <Skeleton className="h-6 w-3/4 mb-12" />
+            <Skeleton className="w-full aspect-[16/9] mb-8" />
+            <div className="space-y-4">
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-5/6" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-4/5" />
+            </div>
+          </div>
+        </div>
+      </MainLayout>
+    );
+  }
+
+  if (!post) return null;
 
   return (
     <MainLayout>
@@ -162,4 +220,4 @@ const TravelPost = () => {
   );
 };
 
-export default TravelPost;
+export default TravelPostPage;
