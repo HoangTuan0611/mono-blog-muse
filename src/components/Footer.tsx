@@ -11,7 +11,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 sm:px-6">
         <div className="flex flex-col md:flex-row justify-between gap-8 text-sm">
           <div>
-            <h2 className="font-medium text-xl mb-4">Minimalist</h2>
+            <h2 className="font-medium text-xl mb-4">NHT</h2>
             <p className="text-gray-500 max-w-md">
               A personal portfolio and blog focused on minimalism, design, and creative pursuits.
             </p>
@@ -44,7 +44,7 @@ const Footer = () => {
         
         <div className="mt-12 pt-8 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-gray-500 text-sm">
-            © {currentYear} Minimalist. All rights reserved.
+            © {currentYear} NHT. All rights reserved.
           </p>
           <div className="text-sm text-gray-500 space-x-6">
             <a href="#" className="hover-underline">Privacy Policy</a>

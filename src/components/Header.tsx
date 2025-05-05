@@ -55,7 +55,7 @@ const Header = () => {
           className="text-2xl font-medium tracking-tighter hover:opacity-80 transition-opacity"
           onClick={closeMenu}
         >
-          Minimalist
+          NHT
         </Link>
 
         {/* Desktop Navigation */}

@@ -24,7 +24,7 @@ const Index = () => {
 
   return (
     <MainLayout 
-      title="Minimalist Blog - Thoughts on design, life, and technology"
+      title="NHT Blog - Thoughts on design, life, and technology"
       description="Explore minimalism, design, and intentional living through our collection of articles, videos, and resources."
     >
       <HeroSection />
