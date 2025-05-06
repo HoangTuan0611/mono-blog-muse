@@ -6,11 +6,18 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { collection, getDocs, query, limit, orderBy } from "firebase/firestore";
 import { db } from "@/firebaseConfig";
 import { Skeleton } from "@/components/ui/skeleton";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { 
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const CertificationsSection = () => {
   const { t } = useLanguage();
   const [certifications, setCertifications] = useState<Certification[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCertifications = async () => {
@@ -39,7 +46,8 @@ const CertificationsSection = () => {
     fetchCertifications();
   }, []);
 
-  console.log("certifications", certifications);
+  // Remove console.log in production
+  // console.log("certifications", certifications);
 
   return (
     <section className="bg-black text-white py-16 md:py-24">
@@ -66,6 +74,7 @@ const CertificationsSection = () => {
           <div className="grid md:grid-cols-3 gap-8">
             {[...Array(3)].map((_, index) => (
               <div key={index} className="border border-gray-800 p-6">
+                <Skeleton className="h-40 w-full mb-4 bg-gray-700" />
                 <div className="flex justify-between items-start mb-4">
                   <Skeleton className="h-6 w-3/4 bg-gray-700" />
                   <Skeleton className="h-6 w-20 bg-gray-700" />
@@ -84,6 +93,32 @@ const CertificationsSection = () => {
                   index + 3
                 } flex flex-col justify-between`}
               >
+                {cert.credentialUrlImage && (
+                  <div className="mb-4">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <button className="w-full text-left" onClick={() => setSelectedImage(cert.credentialUrlImage)}>
+                          <AspectRatio ratio={16 / 9} className="bg-gray-900 overflow-hidden rounded-md cursor-pointer">
+                            <img 
+                              src={cert.credentialUrlImage} 
+                              alt={`${cert.name} Certificate`}
+                              className="object-cover w-full h-full transition-transform hover:scale-105"
+                            />
+                          </AspectRatio>
+                        </button>
+                      </DialogTrigger>
+                      <DialogContent className="p-0 max-w-4xl w-[90vw] sm:w-[85vw] md:w-[80vw] bg-transparent border-0">
+                        <div className="relative w-full h-full">
+                          <img
+                            src={cert.credentialUrlImage}
+                            alt={`${cert.name} Certificate - Full View`}
+                            className="w-full h-auto object-contain max-h-[80vh]"
+                          />
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                )}
                 <div>
                   <div className="flex justify-between items-start mb-4">
                     <h3 className="text-xl font-medium">{cert.name}</h3>

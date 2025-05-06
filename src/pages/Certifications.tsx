@@ -5,6 +5,12 @@ import { db } from "@/firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import { Certification } from "@/data/certifications";
 import { seedCertifications } from "@/lib/firebaseUtils";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { 
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const Certifications = () => {
   const { t } = useLanguage();
@@ -12,6 +18,7 @@ const Certifications = () => {
   const [certifications, setCertifications] = useState<Certification[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCertifications = async () => {
@@ -32,6 +39,7 @@ const Certifications = () => {
             issueDate: data.issueDate,
             expiryDate: data.expiryDate,
             credentialUrl: data.credentialUrl,
+            credentialUrlImage: data.credentialUrlImage,
             category: data.category
           } as Certification;
         });
@@ -104,6 +112,32 @@ const Certifications = () => {
                   key={cert.id} 
                   className={`border border-gray-200 p-6 hover:shadow-md transition-shadow fade-in hover-grow fade-in-${Math.min(index + 1, 5)}`}
                 >
+                  {cert.credentialUrlImage && (
+                    <div className="mb-6">
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <button className="w-full text-left" onClick={() => setSelectedImage(cert.credentialUrlImage)}>
+                            <AspectRatio ratio={16 / 9} className="bg-gray-100 overflow-hidden rounded-md mb-4 cursor-pointer">
+                              <img 
+                                src={cert.credentialUrlImage} 
+                                alt={`${cert.name} Certificate`}
+                                className="object-cover w-full h-full transition-transform hover:scale-105"
+                              />
+                            </AspectRatio>
+                          </button>
+                        </DialogTrigger>
+                        <DialogContent className="p-0 max-w-4xl w-[90vw] sm:w-[85vw] md:w-[80vw] bg-transparent border-0">
+                          <div className="relative w-full h-full">
+                            <img
+                              src={cert.credentialUrlImage}
+                              alt={`${cert.name} Certificate - Full View`}
+                              className="w-full h-auto object-contain max-h-[80vh]"
+                            />
+                          </div>
+                        </DialogContent>
+                      </Dialog>
+                    </div>
+                  )}
                   <div className="flex justify-between items-start mb-4">
                     <h3 className="text-xl font-medium">{cert.name}</h3>
                     <span className="px-3 py-1 bg-gray-100 text-sm dark:bg-gray-800">{cert.category}</span>

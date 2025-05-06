@@ -23,7 +23,7 @@ const Index = () => {
       <RecentPostsSection />
       <VideosSection />
       <TravelSection />
-      <NewsletterSection />
+      {/* <NewsletterSection /> */}
     </MainLayout>
   );
 };
