@@ -17,10 +17,10 @@ const Index = () => {
       description="Explore minimalism, design, and intentional living through our collection of articles, videos, and resources."
     >
       <HeroSection />
+      <CertificationsSection />
       <TrendingTopicsSection />
       <FeaturedPostsSection />
       <RecentPostsSection />
-      <CertificationsSection />
       <VideosSection />
       <TravelSection />
       <NewsletterSection />
