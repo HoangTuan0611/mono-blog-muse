@@ -97,8 +97,8 @@ const Header = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem onClick={() => setLanguage('en')}>English</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setLanguage('fr')}>Français</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setLanguage('es')}>Español</DropdownMenuItem>
+                {/* <DropdownMenuItem onClick={() => setLanguage('fr')}>Français</DropdownMenuItem> */}
+                {/* <DropdownMenuItem onClick={() => setLanguage('es')}>Español</DropdownMenuItem> */}
                 <DropdownMenuItem onClick={() => setLanguage('vi')}>Tiếng Việt</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

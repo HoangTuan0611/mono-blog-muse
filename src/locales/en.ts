@@ -35,6 +35,7 @@ export const en = {
   // Travel
   "travel.title": "Travel Journal",
   "travel.subtitle": "Places visited and experiences gathered",
+  "view_all_travel": "View all",
   
   // Common
   "common.back": "Back",

@@ -5,6 +5,7 @@ import { getFeaturedTravelPosts } from "@/data/travel";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getFeaturedTravelPostsFromFirebase } from "@/lib/firebaseUtils";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "../ui/button";
 
 // Define the TravelPost interface
 interface TravelPost {
@@ -49,10 +50,10 @@ const TravelSection = () => {
       <div className="container mx-auto px-4 sm:px-6">
         <div className="max-w-2xl mx-auto text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-4">
-            {t("home.travel_heading")}
+            {t("travel.title")}
           </h2>
           <p className="text-lg text-gray-600 font-serif">
-            {t("home.travel_subheading")}
+            {t("travel.subtitle")}
           </p>
         </div>
 
@@ -101,14 +102,16 @@ const TravelSection = () => {
           )}
         </div>
 
-        <div className="text-center mt-12">
-          <Link
-            to="/travel"
-            className="inline-flex items-center gap-2 text-black font-medium hover-underline"
+        <div className="flex justify-center mt-12">
+          <Button
+            asChild
+            variant="outline"
+            className="rounded-none dark:border-gray-700 dark:text-gray-200"
           >
-            <span>{t("home.view_all_travel")}</span>
-            <ArrowRight size={16} />
-          </Link>
+            <Link to="/travel" className="flex items-center gap-2">
+              View All Posts <ArrowRight size={16} />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>

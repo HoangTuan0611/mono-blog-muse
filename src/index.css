@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -119,6 +118,23 @@
 
   .post-content p {
     @apply font-serif;
+  }
+  
+  /* Add specific dark mode styles for post content elements */
+  .dark .post-content p,
+  .dark .post-content li,
+  .dark .post-content ul,
+  .dark .post-content ol {
+    @apply text-gray-300;
+  }
+  
+  .dark .post-content h1,
+  .dark .post-content h2,
+  .dark .post-content h3,
+  .dark .post-content h4,
+  .dark .post-content h5,
+  .dark .post-content h6 {
+    @apply text-white;
   }
   
   .trending-card {

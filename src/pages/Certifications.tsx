@@ -39,6 +39,7 @@ const Certifications = () => {
       } catch (err) {
         console.error("Error fetching certifications:", err);
         setError("Failed to load certifications. Please try again later.");
+        
       } finally {
         setLoading(false);
       }
@@ -105,7 +106,7 @@ const Certifications = () => {
                 >
                   <div className="flex justify-between items-start mb-4">
                     <h3 className="text-xl font-medium">{cert.name}</h3>
-                    <span className="px-3 py-1 bg-gray-100 text-sm">{cert.category}</span>
+                    <span className="px-3 py-1 bg-gray-100 text-sm dark:bg-gray-800">{cert.category}</span>
                   </div>
                   <p className="text-gray-600 mb-4 font-serif">{cert.issuer}</p>
                   <div className="flex justify-between items-center text-sm">

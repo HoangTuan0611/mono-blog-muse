@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 
 const NewsletterSection = () => {
+  console.log('111');
+  
   return (
-    <section className="bg-black text-white py-16 md:py-24 animate-on-scroll">
+    <section className="bg-black text-white py-16 md:py-24">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-medium mb-6">Subscribe to the newsletter</h2>
