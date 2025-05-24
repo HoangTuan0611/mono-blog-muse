@@ -16,11 +16,10 @@ export default {
 			screens: {
 				'2xl': '1400px'
 			}
-		},
-		extend: {
+		},		extend: {
 			fontFamily: {
-				sans: ['Inter', 'sans-serif'],
-				serif: ['Georgia', 'serif']
+				sans: ['Poppins', 'sans-serif'],
+				serif: ['Poppins', 'serif']
 			},
 			colors: {
 				border: 'hsl(var(--border))',
