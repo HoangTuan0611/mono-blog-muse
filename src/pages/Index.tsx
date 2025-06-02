@@ -12,9 +12,9 @@ import NewsletterSection from "@/components/home/NewsletterSection";
 
 const Index = () => {
   return (
-    <MainLayout 
-      title="NHT Blog - Thoughts on design, life, and technology"
-      description="Explore minimalism, design, and intentional living through our collection of articles, videos, and resources."
+    <MainLayout
+      title="tuannguyenhoang.com"
+      description="A fullstack developer sharing thoughts on design, life, and technology."
     >
       <HeroSection />
       <CertificationsSection />

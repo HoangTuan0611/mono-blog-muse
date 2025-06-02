@@ -155,7 +155,7 @@ const Header = () => {
               >
                 <Globe size={16} /> English
               </button>
-              <button 
+              {/* <button 
                 className="py-3 px-6 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors w-full text-left flex items-center gap-2" 
                 onClick={() => {setLanguage('fr'); closeMenu();}}
               >
@@ -166,7 +166,7 @@ const Header = () => {
                 onClick={() => {setLanguage('es'); closeMenu();}}
               >
                 <Globe size={16} /> Español
-              </button>
+              </button> */}
               <button 
                 className="py-3 px-6 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors w-full text-left flex items-center gap-2" 
                 onClick={() => {setLanguage('vi'); closeMenu();}}

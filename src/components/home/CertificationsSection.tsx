@@ -7,11 +7,7 @@ import { collection, getDocs, query, limit, orderBy } from "firebase/firestore";
 import { db } from "@/firebaseConfig";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { 
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 const CertificationsSection = () => {
   const { t } = useLanguage();
@@ -86,7 +82,7 @@ const CertificationsSection = () => {
           </div>
         ) : (
           <div className="grid md:grid-cols-3 gap-8">
-            {certifications.map((cert, index) => (
+            {certifications.slice(0, 3).map((cert, index) => (
               <div
                 key={cert.id}
                 className={`border border-gray-800 p-6 hover:bg-white/5 transition-colors fade-in hover-grow fade-in-${
@@ -97,10 +93,18 @@ const CertificationsSection = () => {
                   <div className="mb-4">
                     <Dialog>
                       <DialogTrigger asChild>
-                        <button className="w-full text-left" onClick={() => setSelectedImage(cert.credentialUrlImage)}>
-                          <AspectRatio ratio={16 / 9} className="bg-gray-900 overflow-hidden rounded-md cursor-pointer">
-                            <img 
-                              src={cert.credentialUrlImage} 
+                        <button
+                          className="w-full text-left"
+                          onClick={() =>
+                            setSelectedImage(cert.credentialUrlImage)
+                          }
+                        >
+                          <AspectRatio
+                            ratio={16 / 9}
+                            className="bg-gray-900 overflow-hidden rounded-md cursor-pointer"
+                          >
+                            <img
+                              src={cert.credentialUrlImage}
                               alt={`${cert.name} Certificate`}
                               className="object-cover w-full h-full transition-transform hover:scale-105"
                             />
