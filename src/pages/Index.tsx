@@ -19,10 +19,10 @@ const Index = () => {
       <HeroSection />
       <CertificationsSection />
       <TrendingTopicsSection />
-      <FeaturedPostsSection />
-      <RecentPostsSection />
-      <VideosSection />
-      <TravelSection />
+      {/* <FeaturedPostsSection /> */}
+      {/* <RecentPostsSection /> */}
+      {/* <VideosSection /> */}
+      {/* <TravelSection /> */}
       {/* <NewsletterSection /> */}
     </MainLayout>
   );

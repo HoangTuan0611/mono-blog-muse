@@ -33,11 +33,11 @@ const Header = () => {
 
   const navLinks = [
     { name: t("nav.home"), path: "/" },
-    { name: t("nav.blog"), path: "/blog" },
+    { name: 'CV', path: "http://portfolio.tuannguyenhoang.com/" },
     { name: t("nav.certifications"), path: "/certifications" },
-    { name: t("nav.videos"), path: "/videos" },
-    { name: t("nav.travel"), path: "/travel" },
-    { name: t("nav.about"), path: "/about" },
+    // { name: t("nav.videos"), path: "/videos" },
+    // { name: t("nav.travel"), path: "/travel" },
+    // { name: t("nav.about"), path: "/about" },
   ];
 
   return (
