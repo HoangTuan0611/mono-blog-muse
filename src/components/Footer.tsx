@@ -28,6 +28,11 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
+                  <Link to="https://blog.tuannguyenhoang.com/" className="hover-underline">
+                    Blog
+                  </Link>
+                </li>
+                <li>
                   <Link to="http://portfolio.tuannguyenhoang.com/" className="hover-underline">
                     CV
                   </Link>
