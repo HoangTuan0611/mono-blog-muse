@@ -33,7 +33,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="http://portfolio.tuannguyenhoang.com/" className="hover-underline">
+                  <Link to="https://resume.tuannguyenhoang.com/" className="hover-underline">
                     CV
                   </Link>
                 </li>

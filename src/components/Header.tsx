@@ -34,7 +34,7 @@ const Header = () => {
   const navLinks = [
     { name: t("nav.home"), path: "/" },
     { name: 'Blog', path: "https://blog.tuannguyenhoang.com/" },
-    { name: 'CV', path: "http://portfolio.tuannguyenhoang.com/" },
+    { name: 'CV', path: "https://resume.tuannguyenhoang.com/" },
     { name: t("nav.certifications"), path: "/certifications" },
     // { name: t("nav.travel"), path: "/travel" },
     // { name: t("nav.about"), path: "/about" },

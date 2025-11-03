@@ -17,7 +17,7 @@ const HeroSection = () => {
             <Link to="/blog">Read the Blog</Link>
           </Button> */}
           <Button asChild variant="outline" className="rounded-none px-8 py-6 text-base dark:border-gray-700 dark:text-gray-200">
-            <Link to="http://portfolio.tuannguyenhoang.com/">About Me</Link>
+            <Link to="https://resume.tuannguyenhoang.com/">About Me</Link>
           </Button>
         </div>
       </div>
