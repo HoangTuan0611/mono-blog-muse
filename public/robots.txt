@@ -1,17 +1,25 @@
+# Robots.txt for https://www.tuannguyenhoang.com
 
+# Google
 User-agent: Googlebot
 Allow: /
 
+# Bing
 User-agent: Bingbot
 Allow: /
 
+# Twitter
 User-agent: Twitterbot
 Allow: /
 
+# Facebook
 User-agent: facebookexternalhit
 Allow: /
 
+# All other bots
 User-agent: *
 Allow: /
+Disallow: /cloudinary
 
-Sitemap: https://yourdomain.com/sitemap.xml
+# Sitemap
+Sitemap: https://www.tuannguyenhoang.com/sitemap.xml
